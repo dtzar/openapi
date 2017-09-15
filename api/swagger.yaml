@@ -1,0 +1,56 @@
+swagger: "2.0"
+info:
+  title: K8s Minecraft API
+  version: "0.1.0"
+  description: "An API which returns customized responses from queries to a K8s cluster."
+  contact: 
+    name: "David Tesar"
+  license: 
+    name: "MIT"
+host: "ourk8s.service"
+basePath: "/v1"
+schemes: 
+  - "http"
+consumes: 
+  - "application/json"
+paths:
+  /tenants:
+    get:
+      description: "Get information about minecraft tenants"
+      operationId: tenantsget
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: "Lists information about the available minecraft tenants from K8s cluster."
+          schema: 
+            type: array
+            items: 
+              $ref: "#/definitions/tenant"
+          # examples:
+          #   application/json: |-
+          #   { "name": "tenant1", 
+          #     "endpoints": 
+          #      { "minecraft": "10.10.10.10:25565", "rcon": "10.10.10.10:25575" } 
+          #   },
+          #   { "name": "tenant2", "endpoints": 
+          #     { "minecraft": "10.10.10.11:25565", "rcon": "10.10.10.11:25575" } 
+          #   }, 
+          #   { "name": "tenant3", "endpoints": 
+          #     { "minecraft": "10.10.10.12:25565", "rcon": "10.10.10.12:25575" } 
+          #   }
+definitions: 
+  tenant: 
+    type: array
+    items:
+      type: object
+      properties: 
+        name: 
+          type: string
+        endpoints:
+          type: object
+          properties:
+            minecraft:
+              type: string
+            rcon: 
+              type: string
